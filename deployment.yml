@@ -1,0 +1,24 @@
+#application/deployment.yaml 
+
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: deploy-valuesdemo
+spec:
+  selector:
+    matchLabels:
+      app: pod-valuesdemo-app
+      component: netcore-app
+  replicas: 3 # tells deployment to run 3 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: pod-valuesdemo-app
+        component: netcore-app
+        version: 0.0.2
+    spec:
+      containers:
+      - name: ctnr-valuesdemo
+        image: thirul/kubedemo:0.0.2
+        ports:
+        - containerPort: 80

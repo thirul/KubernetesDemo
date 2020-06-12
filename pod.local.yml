@@ -1,0 +1,17 @@
+# pod.local.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-valuesdemo
+  labels:
+    app: pod-valuesdemo-app
+    component: netcore-app
+    version: 0.0.1
+spec:
+  containers:
+    - image: thirul/kubedemo:latest
+      imagePullPolicy: IfNotPresent
+      name: valuesdemo-api
+      ports:
+        - containerPort: 80
+

@@ -1,0 +1,82 @@
+# Install minikube
+# Install kubernetes
+
+# docker basic commands
+docker version 
+docker images
+docker ps 
+docker push thirul/kubedemo:latest # push docker cloud 
+docker pull thirul/kubedemo:latest # pull docker cloud 
+docker rmi <image> # remove image 
+
+docker build . -t valuesdemo:0.0.1 # docker build image with tag name
+docker run -it -p 8081:80 kubedemo:0.0.1  # docker build . -t thirul/kubedemo:0.0.2
+docker tag <source_tag> <destination> # tag existing image : docker tag kubedemo:latest thirul/kubedemo:latest
+
+
+# minikube commands
+minikube version 
+minikube start 
+minikube service <service_name>  # run minikube service 
+
+#k8s commands
+kubectl version 
+kubectl get nodes
+kubectl config get-contexts
+kubectl set-context minikube
+
+# k8s create pod/svc/deployment from file
+kubectl create -f pod.local.yml
+kubectl create -f service.local.yml
+kubectl create -f deploy.local.yml
+
+# k8s update pod/svc/deployment from file
+kubectl apply -f pod.local.yml
+kubectl apply -f service.local.yml
+kubectl apply -f deploy.local.yml
+
+# k8s get ...
+kubectl get pod --all
+kubectl get pod <pod_name>
+kubectl get pods -l app=nginx
+
+kubectl get svc --all
+kubectl get svc <pod_name>
+kubectl get deployment --all
+kubectl get deployment <pod_name>
+
+# k8s describe ....
+kubectl describe pod  # describe all pods
+kubectl describe pod <pod_name> # describe single 
+kubectl describe svc  # describe all pods
+kubectl describe svc <deployment_name> # describe single 
+kubectl describe deployment  # describe all pods
+kubectl describe deployment <deployment_name> # describe single 
+
+# k8s - get into pod terminal
+kubectl exec -it <pod-name> -- sh
+#add curl package inside the pod
+apk add --no-cache curl # inside pod terminal
+curl cluster-ip:80 # inside pod terminal
+
+
+# k8s delete .....
+kubectl delete pod --all
+kubectl delete pod <pod name>
+kubectl delete svc --all
+kubectl delete svc <svc name>
+kubectl delete deployment --all
+kubectl delete deployment <deployment name>
+
+# k8s general 
+kubectl port-forward svc/svc-valuesdemo 8111:8111 # forward to local host - only works for session on live
+
+
+--------------------------
+
+#Troubleshoot:
+1. pod is not able to pull image: solultion is include imagePullPolicy: IfNotPresent in the pod.yml
+2. pod is not able to pull image from docker local registry -- gave up
+
+// kube service forward to localhost instead of minikube ip based port, it will forward to local port mapping 
+kubectl port-forward svc/mongo 27017:27017

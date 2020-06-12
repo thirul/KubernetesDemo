@@ -1,0 +1,17 @@
+# service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: svc-valuesdemo-app
+  name: svc-valuesdemo
+spec:
+  ports:
+    - port: 8111
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: pod-valuesdemo-app
+    component: netcore-app
+  type: NodePort
+
